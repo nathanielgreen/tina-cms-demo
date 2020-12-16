@@ -1,11 +1,19 @@
 import Head from 'next/head'
 import { getGithubPreviewProps, parseJson } from 'next-tinacms-github'
 import { GetStaticProps } from 'next'
+import { usePlugin } from 'tinacms'
+ import { useGithubJsonForm } from 'react-tinacms-github'
 
 import styles from '../styles/Home.module.css'
 
  export default function Home({ file }) {
-  const data = file.data
+  const formOptions = {
+    label: 'Home Page',
+    fields: [{ name: 'title', component: 'text' }],
+  }
+  // Registers a JSON Tina Form
+  const [data, form] = useGithubJsonForm(file, formOptions)
+  usePlugin(form)
   return (
     <div className={styles.container}>
       <Head>
